@@ -1,10 +1,20 @@
-const jsonServer = require("json-server");
-const server = jsonServer.create();
-const router = jsonServer.router("products.json");
-middlewares = jsonServer.defaults();
-const port = process.env.PORT || 3000;
+const express = require("express");
+const app = express();
+const data = require("./products.json");
 
-server.use(middlewares);
-server.use(router);
+// Get all products
+app.get("/api/products", (req, res) => {
+  res.json(data.products);
+});
 
-server.listen(port);
+// Get product by ID
+app.get("/api/products/:id", (req, res) => {
+  const product = data.products.find((p) => p.id === parseInt(req.params.id));
+  if (!product) {
+    return res.status(404).json({ message: "Product not found" });
+  }
+  res.json(product);
+});
+
+// Export for Vercel
+module.exports = app;
