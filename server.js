@@ -1,10 +1,19 @@
 const express = require("express");
+const cors = require("cors"); // <-- import cors
 const app = express();
 const data = require("./products.json");
+
+// Enable CORS for all origins (or specify your frontend origin)
+app.use(
+  cors({
+    origin: "http://localhost:5173", // only allow your frontend during dev
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("🎸 Welcome to the Music Store API! Try /api/products");
 });
+
 // Get all products
 app.get("/api/products", (req, res) => {
   res.json(data.products);
