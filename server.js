@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const data = require("./products.json");
 
+app.get("/", (req, res) => {
+  res.send("🎸 Welcome to the Music Store API! Try /api/products");
+});
 // Get all products
 app.get("/api/products", (req, res) => {
   res.json(data.products);
